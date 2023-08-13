@@ -1,5 +1,3 @@
-//import exp from "constants"
-
 import {listDirContents, createFile, createDir, removeFile, removeDir } from './index'
 //const listDirContents = require('./index')
 
