@@ -7,3 +7,7 @@ web_modules/
 
 # TypeScript cache
 *.tsbuildinfo\
+
+.secret
+test/
+test.txt

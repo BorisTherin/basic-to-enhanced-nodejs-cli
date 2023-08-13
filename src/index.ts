@@ -1,15 +1,21 @@
 #! /usr/bin/env node
 
+/**
+ * TODO:
+ *  bring astro-cli design in (loader, round-box, ...)
+ *  test external requirements (env, tools, ...)
+ *  install command
+ *  update command
+ */
+
 const { Command } = require("commander")
-// import fs and path modules
 const fs = require("fs")
 const path = require("path")
 const figlet = require("figlet")
 
-//add the following line
 const program = new Command()
 
-console.log(figlet.textSync("Dir Manager"))
+console.log(figlet.textSync("Yellow Manager"))
 
 program
   .version("1.0.0")
@@ -21,32 +27,49 @@ program
 
 const options = program.opts()
 
-//define the following function
-async function listDirContents(filepath: string) {
+export async function listDirContents(filepath: string) {
   try {
     const files = await fs.promises.readdir(filepath)
     const detailedFilesPromises = files.map(async (file: string) => {
       let fileDetails = await fs.promises.lstat(path.resolve(filepath, file))
       const { size, birthtime } = fileDetails
-      return { filename: file, "size(KB)": size, created_at: birthtime }
+      return { filename: file, "size(KB)": size, created_at: ""+birthtime }
     })
     const detailedFiles = await Promise.all(detailedFilesPromises);
     console.table(detailedFiles);
+    return(true)
   } catch (error) {
       console.error("Error occurred while reading the directory!", error)
+      return(false)
   }
 }
 
-function createDir(filepath: string) {
+export function createDir(filepath: string) {
   if (!fs.existsSync(filepath)) {
     fs.mkdirSync(filepath);
     console.log("The directory has been created successfully");
-  }
+    return(true)
+  }else return(false)
 }
 
-function createFile(filepath: string) {
+export function removeDir(filepath: string) {
+  if (fs.existsSync(filepath)) {
+    fs.rmdirSync(filepath, { recursive: true });
+    console.log("The directory has been removed");
+    return(true)
+  }else return(false)
+}
+
+export function createFile(filepath: string) {
   fs.openSync(filepath, "w");
   console.log("An empty file has been created");
+  return(true);
+}
+
+export function removeFile(filepath: string) {
+  fs.rmSync(filepath);
+  console.log(`File ${filepath} removed`);
+  return(true);
 }
 
 if (options.ls) {
@@ -65,3 +88,4 @@ if (options.touch) {
 if (!process.argv.slice(2).length) {
   program.outputHelp();
 }
+
