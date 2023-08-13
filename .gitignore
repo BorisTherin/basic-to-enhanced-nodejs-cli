@@ -2,6 +2,7 @@
 node_modules/
 jspm_packages/
 dist/
+.github/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
