@@ -12,20 +12,71 @@ const { Command } = require("commander")
 const fs = require("fs")
 const path = require("path")
 const figlet = require("figlet")
+import * as readline from 'node:readline/promises';
+import { exit, stdin as input, stdout as output } from 'node:process';
 
-const program = new Command()
+const yellowCli = new Command()
+interface deploy {
+  question: string,
+  default: string, 
+  answer: string,
+  callBack: Function,
+}
 
-console.log(figlet.textSync("Yellow Manager"))
+const questions: deploy[] = [
+  { 
+    question: "Enter install directory : ", 
+    default: "yellow", 
+    answer: "", 
+    callBack: (reponse: string)=>{
+      console.log("reponse 1 : ", reponse)
+    }
+  },
+  { 
+    question: "Enter your twitch channel name: ", 
+    default: "", 
+    answer: "", 
+    callBack: (reponse: string)=>{
+      console.log("reponse 2 : ", reponse)
+    }
+  },
+  { 
+    question: "more ...", 
+    default: "", 
+    answer: "", 
+    callBack: (reponse: string)=>{
+      console.log("reponse 3 : ", reponse)
+    }
+  }
+];
 
-program
+yellowCli
   .version("1.0.0")
   .description("An example CLI for managing a directory")
   .option("-l, --ls  [value]", "List directory contents")
   .option("-m, --mkdir <value>", "Create a directory")
   .option("-t, --touch <value>", "Create a file")
+  .option("-i, --install", "install yellow radio")
   .parse(process.argv)
 
-const options = program.opts()
+console.log(figlet.textSync("Yellow Manager"))
+
+const yellowOpts = yellowCli.opts()
+const mandatoryOptions: string[] = []
+let failed: boolean = false
+for (const option of mandatoryOptions) {
+  if ( JSON.stringify(yellowOpts).replace(option, '') == JSON.stringify(yellowOpts)) {
+    console.log(`mandatory option ${option}: failed`)
+    failed = true
+  }
+}
+if (failed == true)
+  try { throw new Error(` command line options failed `); } 
+  catch(e){ console.log(`command line options failed `); exit(1); }
+
+console.log('\nYELLOW VCLI Options: ', JSON.stringify(yellowOpts));
+console.log('Remaining arguments: ', yellowCli.args);
+console.log('\n')
 
 export async function listDirContents(filepath: string) {
   try {
@@ -71,21 +122,67 @@ export function removeFile(filepath: string) {
   console.log(`File ${filepath} removed`);
   return(true);
 }
+// **************************************************************
 
-if (options.ls) {
-  const filepath = typeof options.ls === "string" ? options.ls : __dirname;
+const getHasCli = (prefix: string, alias = undefined) => {
+  const prefixIndex = process.argv.findIndex(
+    (arg) => arg === prefix || (alias && arg === alias)
+  );
+  return prefixIndex > 0;
+};
+
+const getCliData = (prefix: string, alias = undefined) => {
+  let data = undefined;
+  const prefixIndex = process.argv.findIndex(
+    (arg) => arg === prefix || (alias && arg === alias)
+  );
+  if (prefixIndex > 0) {
+    const cliData = process.argv[prefixIndex + 1] ?? undefined;
+    if (cliData) {
+      data = cliData.includes("-") ? undefined : cliData;
+    }
+  }
+  return data;
+};
+
+let rl: readline.Interface
+async function listQuestions(deploy: deploy) {
+  let answer: string = await rl.question(
+    deploy.question+
+    ((deploy.default != "")?" (default: "+deploy.default+" )":"")
+  );
+  if (answer == '' && deploy.default != '')
+    deploy.answer = ((deploy.default != '')?deploy.default:'');
+  else deploy.answer = answer;
+  deploy.callBack(deploy.answer)
+}
+
+if (yellowOpts.ls) {
+  const filepath = typeof yellowOpts.ls === "string" ? yellowOpts.ls : __dirname;
   listDirContents(filepath);
 }
 
-if (options.mkdir) {
-  createDir(path.resolve(__dirname, options.mkdir));
+if (yellowOpts.mkdir) {
+  createDir(path.resolve(__dirname, yellowOpts.mkdir));
 }
 
-if (options.touch) {
-  createFile(path.resolve(__dirname, options.touch));
+if (yellowOpts.touch) {
+  createFile(path.resolve(__dirname, yellowOpts.touch));
 }
 
 if (!process.argv.slice(2).length) {
-  program.outputHelp();
+  yellowCli.outputHelp();
 }
 
+if (yellowOpts.install) {
+  console.log('option install')
+  install()
+}
+
+async function install() {
+  rl =  readline.createInterface({ input, output });
+  for (let i: number = 0; i < questions.length; i++) {
+    await listQuestions(questions[i])
+  }
+  rl.close();
+}
