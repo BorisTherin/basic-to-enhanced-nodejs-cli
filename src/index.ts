@@ -43,7 +43,9 @@ function makeDir(path: string) {
         fs.mkdirSync(path);
         return(true)
     } else {
-        throw new Error(`le repertoire ${path} existe deja`);
+        //throw new Error(`le repertoire ${path} existe deja`);
+        console.log("le repertoire existe deja")
+        yellowCli.help()
     }
 }
 
@@ -61,9 +63,7 @@ if (wasDirOptionUsed) {
         } catch (error) {
           yellowCli.help()
           console.error(error)
-
-        }
-        
+        }        
     }
 }
 
