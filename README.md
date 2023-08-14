@@ -2,6 +2,7 @@
 
 Ce package vous permet de générer automatiquement un projet Astro.
 Le projet Astro généré comprend:
+* inspiré de l'excellent & performant template: https://github.com/mhyfritz/astro-landing-page
 * typescript
 * preact
 * tailwindcss
