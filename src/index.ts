@@ -18,9 +18,6 @@ const gradient = require('gradient-string');
 import getRandomName from './modules/RandomNames'
 import { getCliData, getHasCli } from './modules/CommanderUtils'
 
-
-console.log(`Random Name = [${getRandomName()}]`)
-
 const yellowCli = new Command()
 yellowCli
   .version("1.0.0")
@@ -47,13 +44,13 @@ function makeDir(path: string) {
 
 const wasDirOptionUsed = isDirOptionUsed()
 
-console.log("is --dir ", wasDirOptionUsed)  
-
-
 if (wasDirOptionUsed) {
     let dirPath = getCliData("--dir")
     if (dirPath) 
         makeDir(dirPath)
-    else 
-        makeDir(getRandomName())
+    else {
+        let generatedFolderName = getRandomName()
+        console.log(`Your project will be generated in the [${generatedFolderName}]`)
+        makeDir(generatedFolderName)
+    }
 }
