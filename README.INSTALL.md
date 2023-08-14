@@ -54,5 +54,6 @@ todo :
   add ASTRO-SEO https://github.com/jonasmerlin/astro-seo#readme
 
 
-
+    genere un project
+        un path (default: random)
 
