@@ -37,8 +37,7 @@ function makeDir(path: string) {
         fs.mkdirSync(path);
         return(true)
     } else {
-        console.log(`le repertoire ${path} existe deja`)
-        return(false)
+        throw new Error(`̀le repertoire ${path} existe deja`)
     }
 }
 
