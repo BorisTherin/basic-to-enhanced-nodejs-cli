@@ -140,26 +140,3 @@ npm publish
  * https://www.npmjs.com/package/commander
  * https://www.npmjs.com/package//figlet?activeTab=readme
  * https://jestjs.io/docs/getting-started#using-typescript
-
-
-
-----------------------------------------------------------------------------------------------
-done: 
-  https://www.npmjs.com/package/inquirer
-  https://www.npmjs.com/package/gradient-string
-
-todo : 
-  rename to create-astro-matrix
-
-  
-
-
-### INSTALLER le TEMPLATE ASTRO-RADIO
-
-
-
-
-requis pour installer astro-yellow
---seo []
---type 
---dir 

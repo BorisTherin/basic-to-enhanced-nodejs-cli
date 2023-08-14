@@ -111,9 +111,10 @@ const questions = [
 yellowCli
   .version("1.0.0")
   .description("An example CLI for managing a directory")
-  .option("-l, --ls  [value]", "List directory contents")
-  .option("-m, --mkdir <value>", "Create a directory")
-  .option("-t, --touch <value>", "Create a file")
+  //.option("-l, --ls  [value]", "List directory contents")
+  //.option("-m, --mkdir <value>", "Create a directory")
+  //.option("-t, --touch <value>", "Create a file")
+  .option("-c, --config", "Config your template")
   .option("-i, --install", "install yellow radio")
   .parse(process.argv)
 
@@ -121,6 +122,40 @@ yellowCli
 /**
  * FUNCTIONS
  */
+function roundedLine(l: number, mode: string, content: string) {
+  const top = ["\u256D", "\u256E"]
+  const middle = ["\u2502", "\u2502"]
+  const bottom = ["\u2570", "\u256F"]
+  const corner = ((mode=="top")?top:((mode=="middle")?middle:bottom))
+
+  let line = corner[0]
+  if (mode != "middle") for (let i: number = 0; i < l; i++) line += ((mode=="top")?"\u23BC":"\u23BC")
+  else if (content.length < l) { 
+    line += content
+    for (let i: number = content.length; i < l; i++) line += " "
+  }
+  else line += content
+  line += corner[1]
+  return(" "+line+"\n")
+}
+
+function frame(text: string, pad: number) {
+  let render: string = ""
+  let maxlength = 0
+  let content = text.split('\n')
+
+  content.map( (line: string) => {
+    if (maxlength < line.length) maxlength = line.length
+  })
+  content.map( (line: string) => {
+    render += roundedLine(maxlength, "middle", line)
+  })
+  
+  render = roundedLine(maxlength, "top", "") + render
+  render += roundedLine(maxlength, "bottom", "")
+
+  return(render)
+}
 
 export async function listDirContents(filepath: string) {
   try {
@@ -212,9 +247,9 @@ async function listQuestions(deploy: any) {
  */
 
 const yellowBanner: string = gradient('orange', 'yellow').multiline([ 
-  figlet.textSync("Yellow Manager").split('\\n')
+  frame(figlet.textSync("Yellow Manager"),0).split('\\n')
 ])
-console.log(yellowBanner);
+console.log("\n"+yellowBanner);
 
 const yellowOpts = yellowCli.opts()
 const mandatoryOptions: string[] = []
@@ -228,11 +263,6 @@ for (const option of mandatoryOptions) {
 if (failed == true)
   try { throw new Error(` command line options failed `); } 
   catch(e){ console.log(`command line options failed `); exit(1); }
-
-console.log('\nYELLOW VCLI Options: ', JSON.stringify(yellowOpts));
-console.log('Remaining arguments: ', yellowCli.args);
-console.log('\n')
-
 
 if (yellowOpts.ls) {
   const filepath = typeof yellowOpts.ls === "string" ? yellowOpts.ls : __dirname;
@@ -248,7 +278,16 @@ if (yellowOpts.touch) {
 }
 
 if (!process.argv.slice(2).length) {
-  yellowCli.outputHelp();
+  const usage: string[] = [
+    "Usage: index [options]",
+    "",
+    "Options:",
+    "   -c, --config, Config your template",
+    "   -i, --install, install astro-matrix",
+  ]
+  console.log(gradient('orange', 'yellow').multiline([
+    frame(usage.join('\n'),0).split('\\n')
+  ]));
 }
 
 if (yellowOpts.install) {
