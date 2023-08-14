@@ -8,10 +8,7 @@
  *  update command
  */
 
-// const { Command } = require("commander")
 import { Command } from "commander"
-// const fs = require("fs")
-
 
 // const path = require("path")
 import path from 'path'
@@ -27,7 +24,7 @@ import { getCliData, makeDir, copyDir } from './modules/CommanderUtils'
 const yellowCli = new Command()
 yellowCli
   .version("1.0.0")
-  .description("An example CLI for managing a directory")
+  .description("Une CLI pour générer un template Astro inédit (https://github.com/bioboosterbob/matrix-land-astro-template)")
   .option("--dir", "config the directory for template")
   .parse(process.argv)
   
