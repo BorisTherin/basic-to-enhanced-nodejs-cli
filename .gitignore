@@ -1,7 +1,7 @@
-# bob
+node_modules/*
 .secret
 test/*
 test.txt
 package-lock.json
 dist/*
-node_modules/*
+
