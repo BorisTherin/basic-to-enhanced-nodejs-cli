@@ -26,13 +26,13 @@ yellowCli
   .description("An example CLI for managing a directory")
   .option("--dir", "config the directory for template")
   .parse(process.argv)
-
   
 const yellowOpts = yellowCli.opts()
-function isDirArg() {
+
+function isDirOptionUsed() {
     if (yellowOpts.dir) return true
     else return false
 }
 
-const dir = isDirArg()
+const dir = isDirOptionUsed()
 console.log("is --dir ",dir)  
