@@ -42,9 +42,14 @@ const wasDirOptionUsed = isDirOptionUsed()
 
 if (wasDirOptionUsed) {
     let dirPath = getCliData("--dir")
-    if (dirPath) 
-        makeDir(dirPath) || yellowCli.help()
-    else {
+    if (dirPath) {
+      try {
+        makeDir(dirPath)
+      } catch (error) {
+        console.error(error)
+        yellowCli.help()
+      }
+    } else {
         let generatedFolderName = getRandomName()
         console.log(`Your project will be generated in the [${generatedFolderName}]`)
         try {
@@ -55,15 +60,4 @@ if (wasDirOptionUsed) {
         }        
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 

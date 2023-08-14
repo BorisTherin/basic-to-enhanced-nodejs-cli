@@ -22,18 +22,20 @@ export const getCliData = (prefix: string, alias = undefined) => {
 };
 
 export function copyDir(from: string, to: string) {
-    makeDir(to)
+    //makeDir(to)
     fs.cp(from, to, {recursive:true}, () => {});
 }
 
-export function makeDir(path: string) {
+/**
+ * 
+ * @param path le chemin du répertorie à créer
+ * @throws une erreur lorsque le répertorie existe déjà, ou, si un problème est suvenu lors de la création du r^pertoire, propage l'exception levée par {@fs.mkdirSync}
+ */
+export function makeDir(path: string): void {
     if (!fs.existsSync(path)) {
-        try {fs.mkdirSync(path); return(true)}
-        catch (e) { console.error("erreur",e); return(false)}
+        fs.mkdirSync(path);
     } else {
-        console.log("le repertoire existe deja")
+        throw new Error("le repertoire existe deja")
         //yellowCli.help()
-        return(false)
     }
-}
-  
+} 
