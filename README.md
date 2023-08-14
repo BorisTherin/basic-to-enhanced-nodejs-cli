@@ -1,11 +1,11 @@
 # What is this ?
 
-Ce package vous permet de générer automatiquement un project Astro.
+Ce package vous permet de générer automatiquement un projet Astro.
 Le projet Astro généré comprend:
 * typescript
 * preact
 * tailwindcss
-* uncomposant preact inédit, ```/src/comonents/YellowMatrix.tsx```
+* un composant preact inédit, ```/src/comonents/YellowMatrix.tsx```
 
 ## How to use
 
@@ -15,7 +15,7 @@ npx create-astro-matrix
 
 ### Options
 
-* `--dir path/to/your/folder`: nom du répertoire ou sera généré le project, si l'option n'est pas fournit, une chaine de charactère aléatoire sera la valeur par défault.
+* `--dir path/to/your/folder`: nom du répertoire ou sera généré le projet, si l'option n'est pas fournit, une chaine de charactère aléatoire sera la valeur par défault.
 
 * `--seo "cuisine, poulet, repas, chaussures, bijoux, or, diamant"`: renseigner les mots-clés pour votre référencement naturel SEO, separé par une virgule, entre guillemets.
 
