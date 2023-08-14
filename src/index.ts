@@ -40,10 +40,9 @@ function isDirOptionUsed() {
 
 function makeDir(path: string) {
     if (!fs.existsSync(path)) {
-        fs.mkdirSync(path);
-        return(true)
+        try {fs.mkdirSync(path);}
+        catch (e) { console.error(e)}
     } else {
-        //throw new Error(`le repertoire ${path} existe deja`);
         console.log("le repertoire existe deja")
         yellowCli.help()
     }
