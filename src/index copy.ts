@@ -311,5 +311,3 @@ async function install() {
     console.log(JSON.stringify(answers, null, '  '));
   });
 }
-
-makeDir('test')
