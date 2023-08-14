@@ -1,6 +1,6 @@
 ## HOW TO INSTALL
-* ```bash
- npx create-astro-matrix
+```bash
+npx create-astro-matrix
 ```
 
 ### Options
