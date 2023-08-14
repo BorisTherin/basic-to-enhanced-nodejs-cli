@@ -15,7 +15,8 @@ const figlet = require("figlet")
 import { exit, stdin as input, stdout as output } from 'node:process';
 const inquirer = require('inquirer')
 const gradient = require('gradient-string');
-import getRandomName from './modules/randomNames/'
+import getRandomName from './modules/RandomNames'
+import {  getCliData, getHasCli } from './modules/CommanderUtils'
 
 
 console.log(`Random Name = [${getRandomName()}]`)
@@ -34,5 +35,36 @@ function isDirOptionUsed() {
     else return false
 }
 
-const dir = isDirOptionUsed()
-console.log("is --dir ",dir)  
+function makeDir(path: string) {
+    if (!fs.existsSync(path)) {
+        fs.mkdirSync(path);
+        return(true)
+    } else {
+        console.log(`le repertoire ${path} existe deja`)
+        return(false)
+    }
+}
+
+const getCliData = (prefix: string, alias = undefined) => {
+    let data = undefined;
+    const prefixIndex = process.argv.findIndex(
+      (arg) => arg === prefix || (alias && arg === alias)
+    );
+    if (prefixIndex > 0) {
+      const cliData = process.argv[prefixIndex + 1] ?? undefined;
+      if (cliData) {
+        data = cliData.includes("-") ? undefined : cliData;
+      }
+    }
+    return data;
+  };
+  
+
+const wasDirOptionUsed = isDirOptionUsed()
+
+console.log("is --dir ", wasDirOptionUsed)  
+
+
+if (wasDirOptionUsed) {
+    makeDir
+}

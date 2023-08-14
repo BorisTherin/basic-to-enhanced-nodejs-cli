@@ -15,7 +15,7 @@ const figlet = require("figlet")
 import { exit, stdin as input, stdout as output } from 'node:process';
 const inquirer = require('inquirer')
 const gradient = require('gradient-string');
-import getRandomName from './modules/randomNames/'
+import getRandomName from './modules/RandomNames'
 
 
 console.log(`Random Name = [${getRandomName()}]`)
