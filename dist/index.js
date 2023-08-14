@@ -7,29 +7,6 @@
  *  install command
  *  update command
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -45,34 +22,129 @@ const { Command } = require("commander");
 const fs = require("fs");
 const path = require("path");
 const figlet = require("figlet");
-const readline = __importStar(require("node:readline/promises"));
+// import * as readline from 'node:readline/promises';
 const node_process_1 = require("node:process");
+//import inquirer from 'inquirer';
+const inquirer = require('inquirer');
 const yellowCli = new Command();
+/*
+interface deploy {
+  question: string,
+  default: string,
+  answer: string,
+  callBack: Function,
+}
+*/
+/*
+const questions: deploy[] = [
+  {
+    question: "Enter install directory : ",
+    default: "yellow",
+    answer: "",
+    callBack: (reponse: string)=>{
+      console.log("reponse 1 : ", reponse)
+    }
+  },
+  {
+    question: "Enter your twitch channel name: ",
+    default: "",
+    answer: "",
+    callBack: (reponse: string)=>{
+      console.log("reponse 2 : ", reponse)
+    }
+  },
+  {
+    question: "more ...",
+    default: "",
+    answer: "",
+    callBack: (reponse: string)=>{
+      console.log("reponse 3 : ", reponse)
+    }
+  }
+];
+*/
 const questions = [
     {
-        question: "Enter install directory : ",
-        default: "yellow",
-        answer: "",
-        callBack: (reponse) => {
-            console.log("reponse 1 : ", reponse);
-        }
+        type: 'confirm',
+        name: 'toBeDelivered',
+        message: 'Is this for delivery?',
+        default: false,
+        transformer: (answer) => (answer ? '👍' : '👎'),
     },
     {
-        question: "Enter your twitch channel name: ",
-        default: "",
-        answer: "",
-        callBack: (reponse) => {
-            console.log("reponse 2 : ", reponse);
-        }
+        type: 'input',
+        name: 'phone',
+        message: "What's your phone number?",
+        validate(value) {
+            const pass = value.match(/^([01]{1})?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})\s?((?:#|ext\.?\s?|x\.?\s?){1}(?:\d+)?)?$/i);
+            if (pass) {
+                return true;
+            }
+            return 'Please enter a valid phone number';
+        },
     },
     {
-        question: "more ...",
-        default: "",
-        answer: "",
-        callBack: (reponse) => {
-            console.log("reponse 3 : ", reponse);
-        }
-    }
+        type: 'list',
+        name: 'size',
+        message: 'What size do you need?',
+        choices: ['Large', 'Medium', 'Small'],
+        filter(val) {
+            return val.toLowerCase();
+        },
+    },
+    {
+        type: 'input',
+        name: 'quantity',
+        message: 'How many do you need?',
+        validate(value) {
+            const valid = !isNaN(parseFloat(value));
+            return valid || 'Please enter a number';
+        },
+        filter: Number,
+    },
+    {
+        type: 'expand',
+        name: 'toppings',
+        message: 'What about the toppings?',
+        choices: [
+            {
+                key: 'p',
+                name: 'Pepperoni and cheese',
+                value: 'PepperoniCheese',
+            },
+            {
+                key: 'a',
+                name: 'All dressed',
+                value: 'alldressed',
+            },
+            {
+                key: 'w',
+                name: 'Hawaiian',
+                value: 'hawaiian',
+            },
+        ],
+    },
+    {
+        type: 'rawlist',
+        name: 'beverage',
+        message: 'You also get a free 2L beverage',
+        choices: ['Pepsi', '7up', 'Coke'],
+    },
+    {
+        type: 'input',
+        name: 'comments',
+        message: 'Any comments on your purchase experience?',
+        default: 'Nope, all good!',
+    },
+    {
+        type: 'list',
+        name: 'prize',
+        message: 'For leaving a comment, you get a freebie',
+        choices: ['cake', 'fries'],
+        when(answers) {
+            return answers.comments !== 'Nope, all good!';
+        },
+    },
 ];
 yellowCli
     .version("1.0.0")
@@ -172,16 +244,34 @@ const getCliData = (prefix, alias = undefined) => {
     }
     return data;
 };
-let rl;
+//let rl: readline.Interface
 function listQuestions(deploy) {
     return __awaiter(this, void 0, void 0, function* () {
-        let answer = yield rl.question(deploy.question +
-            ((deploy.default != "") ? " (default: " + deploy.default + " )" : ""));
+        inquirer
+            .prompt([
+            deploy.question
+        ])
+            .then((answers) => {
+            deploy.callBack(answers);
+        })
+            .catch((error) => {
+            if (error.isTtyError) {
+                console.log("Prompt couldn't be rendered in the current environment");
+            }
+            else {
+                console.log("Something else went wrong");
+            }
+        });
+        /*
+        let answer: string = await rl.question(
+          deploy.question+
+          ((deploy.default != "")?" (default: "+deploy.default+" )":"")
+        );
         if (answer == '' && deploy.default != '')
-            deploy.answer = ((deploy.default != '') ? deploy.default : '');
-        else
-            deploy.answer = answer;
-        deploy.callBack(deploy.answer);
+          deploy.answer = ((deploy.default != '')?deploy.default:'');
+        else deploy.answer = answer;
+        deploy.callBack(deploy.answer)
+        */
     });
 }
 if (yellowOpts.ls) {
@@ -203,11 +293,15 @@ if (yellowOpts.install) {
 }
 function install() {
     return __awaiter(this, void 0, void 0, function* () {
-        rl = readline.createInterface({ input: node_process_1.stdin, output: node_process_1.stdout });
-        for (let i = 0; i < questions.length; i++) {
-            yield listQuestions(questions[i]);
-        }
-        rl.close();
+        //rl =  readline.createInterface({ input, output });
+        //for (let i: number = 0; i < questions.length; i++) {
+        //await listQuestions(questions)
+        //}
+        //rl.close();
+        inquirer.prompt(questions).then((answers) => {
+            console.log('\nOrder receipt:');
+            console.log(JSON.stringify(answers, null, '  '));
+        });
     });
 }
 //# sourceMappingURL=index.js.map

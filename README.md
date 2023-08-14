@@ -196,3 +196,26 @@ git push -u origin main
  * https://www.npmjs.com/package//figlet?activeTab=readme
  * https://jestjs.io/docs/getting-started#using-typescript
 
+
+
+----------------------------------------------------------------------------------------------
+todo : 
+  rename to create-astro-matrix
+  ex : https://www.npmjs.com/package/aboudmodv2?activeTab=dependencies
+  https://www.npmjs.com/package/inquirer
+  https://www.npmjs.com/package/nanospinner
+  https://www.npmjs.com/package/gradient-string
+  https://www.npmjs.com/package/chalk-animation?activeTab=readme
+  https://www.npmjs.com/package/chalk
+
+
+
+### INSTALLER le TEMPLATE ASTRO-RADIO
+
+
+
+
+requis pour installer astro-yellow
+--seo []
+--type 
+--dir 
