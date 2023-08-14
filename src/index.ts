@@ -20,3 +20,19 @@ import getRandomName from './modules/randomNames/'
 
 console.log(`Random Name = [${getRandomName()}]`)
 
+const yellowCli = new Command()
+yellowCli
+  .version("1.0.0")
+  .description("An example CLI for managing a directory")
+  .option("--dir", "config the directory for template")
+  .parse(process.argv)
+
+  
+const yellowOpts = yellowCli.opts()
+function isDirArg() {
+    if (yellowOpts.dir) return true
+    else return false
+}
+
+const dir = isDirArg()
+  
