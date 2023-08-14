@@ -1,6 +1,11 @@
 # What is this ?
 
 Ce package vous permet de générer automatiquement un project Astro.
+Le projet Astro généré comprend:
+* typescript
+* preact
+* tailwindcss
+* uncomposant preact inédit, ```/src/comonents/YellowMatrix.tsx```
 
 ## How to use
 
