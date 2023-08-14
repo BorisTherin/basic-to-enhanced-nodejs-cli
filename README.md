@@ -1,4 +1,4 @@
-## HOW TO INSTALL
+## How to install
 
 ```bash
 npx create-astro-matrix
