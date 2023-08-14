@@ -146,16 +146,12 @@ npm publish
 ----------------------------------------------------------------------------------------------
 done: 
   https://www.npmjs.com/package/inquirer
+  https://www.npmjs.com/package/gradient-string
 
 todo : 
   rename to create-astro-matrix
-  ex : https://www.npmjs.com/package/aboudmodv2?activeTab=dependencies
-  
-  https://www.npmjs.com/package/nanospinner
-  https://www.npmjs.com/package/gradient-string
-  https://www.npmjs.com/package/chalk-animation?activeTab=readme
-  https://www.npmjs.com/package/chalk
 
+  
 
 
 ### INSTALLER le TEMPLATE ASTRO-RADIO

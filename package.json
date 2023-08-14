@@ -1,11 +1,8 @@
 {
-  "name": "yellow-radio-cli",
-  "version": "0.0.1",
-  "description": "a CLI for yellow-radio deployement & configuration",
+  "name": "create-astro-matrix",
+  "version": "0.0.3",
+  "description": "a CLI for yellow-astro-template deployement & configuration",
   "main": "dist/index.js",
-  "bin": {
-    "yellow": "./dist/index.js"
-  },
   "scripts": {
     "build": "npx tsc",
     "clean": "rm -Rf dist && rm -Rf test && rm -f text.txt",
