@@ -11,7 +11,7 @@
 // const { Command } = require("commander")
 import { Command } from "commander"
 // const fs = require("fs")
-import fs from 'fs';
+
 
 // const path = require("path")
 import path from 'path'
@@ -22,7 +22,7 @@ import { exit, stdin as input, stdout as output } from 'node:process';
 // const gradient = require('gradient-string');
 import gradient from 'gradient-string'
 import getRandomName from './modules/RandomNames'
-import { getCliData, getHasCli } from './modules/CommanderUtils'
+import { getCliData, makeDir, copyDir } from './modules/CommanderUtils'
 
 const yellowCli = new Command()
 yellowCli
@@ -38,22 +38,12 @@ function isDirOptionUsed() {
     else return false
 }
 
-function makeDir(path: string) {
-    if (!fs.existsSync(path)) {
-        try {fs.mkdirSync(path);}
-        catch (e) { console.error("erreur",e)}
-    } else {
-        console.log("le repertoire existe deja")
-        yellowCli.help()
-    }
-}
-
 const wasDirOptionUsed = isDirOptionUsed()
 
 if (wasDirOptionUsed) {
     let dirPath = getCliData("--dir")
     if (dirPath) 
-        makeDir(dirPath)
+        makeDir(dirPath) || yellowCli.help()
     else {
         let generatedFolderName = getRandomName()
         console.log(`Your project will be generated in the [${generatedFolderName}]`)
