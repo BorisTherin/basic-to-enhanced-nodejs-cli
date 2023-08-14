@@ -16,7 +16,7 @@ import { exit, stdin as input, stdout as output } from 'node:process';
 const inquirer = require('inquirer')
 const gradient = require('gradient-string');
 import getRandomName from './modules/RandomNames'
-import {  getCliData, getHasCli } from './modules/CommanderUtils'
+import { getCliData, getHasCli } from './modules/CommanderUtils'
 
 
 console.log(`Random Name = [${getRandomName()}]`)
@@ -44,21 +44,6 @@ function makeDir(path: string) {
         return(false)
     }
 }
-
-const getCliData = (prefix: string, alias = undefined) => {
-    let data = undefined;
-    const prefixIndex = process.argv.findIndex(
-      (arg) => arg === prefix || (alias && arg === alias)
-    );
-    if (prefixIndex > 0) {
-      const cliData = process.argv[prefixIndex + 1] ?? undefined;
-      if (cliData) {
-        data = cliData.includes("-") ? undefined : cliData;
-      }
-    }
-    return data;
-  };
-  
 
 const wasDirOptionUsed = isDirOptionUsed()
 
