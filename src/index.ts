@@ -46,6 +46,7 @@ if (wasDirOptionUsed) {
         console.error(error)
         yellowCli.help()
       }
+      copyDir("./template", "./"+dirPath)
     } else {
         let generatedFolderName = getRandomName()
         console.log(`Your project will be generated in the [${generatedFolderName}]`)
@@ -54,7 +55,8 @@ if (wasDirOptionUsed) {
         } catch (error) {
           yellowCli.help()
           console.error(error)
-        }        
+        }      
+        copyDir("./template", "./"+generatedFolderName)  
     }
 }
 
