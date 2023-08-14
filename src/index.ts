@@ -312,4 +312,9 @@ async function install() {
   });
 }
 
-makeDir('test')
+// makeDir('test')
+function copyDir(from: string, to: string) {
+  makeDir(to)
+  fs.cp(from, to, {recursive:true}, () => {});
+}
+// copyDir("./template","nvodir")
