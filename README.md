@@ -12,3 +12,15 @@ npx create-astro-matrix
 
 * `--company "your company name"`: le nom de l'entreprise ou de l'association pour laquelle vous developpez le site web.
 
+### Examples
+```bash
+npx create-astro-matrix --dir myNewWebSiite
+```
+
+```bash
+npx create-astro-matrix --seo "cuisine, poulet, repas, chaussures, bijoux, or, diamant"
+```
+
+```bash
+npx create-astro-matrix --company "my company"
+```
