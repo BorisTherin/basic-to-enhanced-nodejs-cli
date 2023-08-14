@@ -139,4 +139,4 @@ npm publish
  * https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages
  * https://www.npmjs.com/package/commander
  * https://www.npmjs.com/package//figlet?activeTab=readme
- * https://jestjs.io/docs/getting-started#using-typescript
+ * https://jestjs.io/docs/getting-started#using-typescript 
