@@ -10,5 +10,5 @@ npx create-astro-matrix
 
 * `--seo "cuisine, poulet, repas, chaussures, bijoux, or, diamant"`: renseigner les mots-clés pouir votre referencement naturel SEO, separé par une virgule, entre guillemets.
 
-* `--company "your company name"`: le nom de l'entreprise ou de l'association pour laquelle vous developper le site web.
+* `--company "your company name"`: le nom de l'entreprise ou de l'association pour laquelle vous developpez le site web.
 
