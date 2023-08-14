@@ -5,7 +5,10 @@ Le projet Astro généré comprend:
 * typescript
 * preact
 * tailwindcss
-* un composant preact inédit, ```/src/comonents/YellowMatrix.tsx```
+* un composant preact inédit, ```/src/comonents/YellowMatrix.tsx```:
+  * ce composant est hydraté grace au concept d'ilôt Astro.
+  * il consiste en un CANVAS animé à la facon Matrix
+  * inspiré de l'excellent: https://gist.github.com/MatheusCammargho/119fda289d5fd76d419a31a82369a8fd
 
 ## How to use
 
