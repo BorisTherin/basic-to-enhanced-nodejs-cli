@@ -8,13 +8,19 @@
  *  update command
  */
 
-const { Command } = require("commander")
-const fs = require("fs")
-const path = require("path")
-const figlet = require("figlet")
+// const { Command } = require("commander")
+import { Command } from "commander"
+// const fs = require("fs")
+import fs from 'fs';
+
+// const path = require("path")
+import path from 'path'
+//const figlet = require("figlet")
+import figlet from 'figlet'
 import { exit, stdin as input, stdout as output } from 'node:process';
-const inquirer = require('inquirer')
-const gradient = require('gradient-string');
+// const inquirer = require('inquirer')
+// const gradient = require('gradient-string');
+import gradient from 'gradient-string'
 import getRandomName from './modules/RandomNames'
 import { getCliData, getHasCli } from './modules/CommanderUtils'
 
@@ -37,7 +43,7 @@ function makeDir(path: string) {
         fs.mkdirSync(path);
         return(true)
     } else {
-        throw new Error(`̀le repertoire ${path} existe deja`)
+        throw new Error(`le repertoire ${path} existe deja`);
     }
 }
 
@@ -50,6 +56,25 @@ if (wasDirOptionUsed) {
     else {
         let generatedFolderName = getRandomName()
         console.log(`Your project will be generated in the [${generatedFolderName}]`)
-        makeDir(generatedFolderName)
+        try {
+          makeDir(generatedFolderName)
+        } catch (error) {
+          yellowCli.help()
+          console.error(error)
+
+        }
+        
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
