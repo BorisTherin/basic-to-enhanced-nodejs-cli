@@ -51,5 +51,9 @@ console.log("is --dir ", wasDirOptionUsed)
 
 
 if (wasDirOptionUsed) {
-    makeDir
+    let dirPath = getCliData("--dir")
+    if (dirPath) 
+        makeDir(dirPath)
+    else 
+        makeDir(getRandomName())
 }
