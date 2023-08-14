@@ -320,5 +320,5 @@ async function install() {
 function copyDir(from: string, to: string) {
   makeDir(to)
   fs.cp(from, to, {recursive:true}, () => {});
-}const random
-copyDir("./template", )
+}
+// copyDir("./template", )

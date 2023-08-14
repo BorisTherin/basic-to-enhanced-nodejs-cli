@@ -35,4 +35,4 @@ function isDirArg() {
 }
 
 const dir = isDirArg()
-  
+console.log("is --dir ",dir)  
