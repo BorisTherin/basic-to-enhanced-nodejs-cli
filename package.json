@@ -23,6 +23,7 @@
   "dependencies": {
     "commander": "^11.0.0",
     "figlet": "^1.6.0",
+    "gradient-string": "^2.0.2",
     "inquirer": "^8.2.6",
     "ts-node": "^10.9.1"
   },

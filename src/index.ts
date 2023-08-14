@@ -12,49 +12,15 @@ const { Command } = require("commander")
 const fs = require("fs")
 const path = require("path")
 const figlet = require("figlet")
-// import * as readline from 'node:readline/promises';
 import { exit, stdin as input, stdout as output } from 'node:process';
-//import inquirer from 'inquirer';
 const inquirer = require('inquirer')
+const gradient = require('gradient-string');
 
+
+/**
+ * CONSTANTS
+ */
 const yellowCli = new Command()
-/*
-interface deploy {
-  question: string,
-  default: string, 
-  answer: string,
-  callBack: Function,
-}
-*/
-/*
-const questions: deploy[] = [
-  { 
-    question: "Enter install directory : ", 
-    default: "yellow", 
-    answer: "", 
-    callBack: (reponse: string)=>{
-      console.log("reponse 1 : ", reponse)
-    }
-  },
-  { 
-    question: "Enter your twitch channel name: ", 
-    default: "", 
-    answer: "", 
-    callBack: (reponse: string)=>{
-      console.log("reponse 2 : ", reponse)
-    }
-  },
-  { 
-    question: "more ...", 
-    default: "", 
-    answer: "", 
-    callBack: (reponse: string)=>{
-      console.log("reponse 3 : ", reponse)
-    }
-  }
-];
-*/
-
 const questions = [
   {
     type: 'confirm',
@@ -151,24 +117,10 @@ yellowCli
   .option("-i, --install", "install yellow radio")
   .parse(process.argv)
 
-console.log(figlet.textSync("Yellow Manager"))
 
-const yellowOpts = yellowCli.opts()
-const mandatoryOptions: string[] = []
-let failed: boolean = false
-for (const option of mandatoryOptions) {
-  if ( JSON.stringify(yellowOpts).replace(option, '') == JSON.stringify(yellowOpts)) {
-    console.log(`mandatory option ${option}: failed`)
-    failed = true
-  }
-}
-if (failed == true)
-  try { throw new Error(` command line options failed `); } 
-  catch(e){ console.log(`command line options failed `); exit(1); }
-
-console.log('\nYELLOW VCLI Options: ', JSON.stringify(yellowOpts));
-console.log('Remaining arguments: ', yellowCli.args);
-console.log('\n')
+/**
+ * FUNCTIONS
+ */
 
 export async function listDirContents(filepath: string) {
   try {
@@ -237,7 +189,6 @@ const getCliData = (prefix: string, alias = undefined) => {
   return data;
 };
 
-//let rl: readline.Interface
 async function listQuestions(deploy: any) {
 
   inquirer
@@ -254,18 +205,34 @@ async function listQuestions(deploy: any) {
       console.log("Something else went wrong")
     }
   });
-
-  /*
-  let answer: string = await rl.question(
-    deploy.question+
-    ((deploy.default != "")?" (default: "+deploy.default+" )":"")
-  );
-  if (answer == '' && deploy.default != '')
-    deploy.answer = ((deploy.default != '')?deploy.default:'');
-  else deploy.answer = answer;
-  deploy.callBack(deploy.answer)
-  */
 }
+
+/**
+ * START
+ */
+
+const yellowBanner: string = gradient('orange', 'yellow').multiline([ 
+  figlet.textSync("Yellow Manager").split('\\n')
+])
+console.log(yellowBanner);
+
+const yellowOpts = yellowCli.opts()
+const mandatoryOptions: string[] = []
+let failed: boolean = false
+for (const option of mandatoryOptions) {
+  if ( JSON.stringify(yellowOpts).replace(option, '') == JSON.stringify(yellowOpts)) {
+    console.log(`mandatory option ${option}: failed`)
+    failed = true
+  }
+}
+if (failed == true)
+  try { throw new Error(` command line options failed `); } 
+  catch(e){ console.log(`command line options failed `); exit(1); }
+
+console.log('\nYELLOW VCLI Options: ', JSON.stringify(yellowOpts));
+console.log('Remaining arguments: ', yellowCli.args);
+console.log('\n')
+
 
 if (yellowOpts.ls) {
   const filepath = typeof yellowOpts.ls === "string" ? yellowOpts.ls : __dirname;
@@ -290,11 +257,6 @@ if (yellowOpts.install) {
 }
 
 async function install() {
-  //rl =  readline.createInterface({ input, output });
-  //for (let i: number = 0; i < questions.length; i++) {
-    //await listQuestions(questions)
-  //}
-  //rl.close();
   inquirer.prompt(questions).then((answers: any) => {
     console.log('\nOrder receipt:');
     console.log(JSON.stringify(answers, null, '  '));
