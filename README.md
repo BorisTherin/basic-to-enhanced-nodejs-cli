@@ -1,3 +1,7 @@
+# What is this ?
+
+Ce package vous permet de générer automatiquement un project Astro.
+
 ## How to use
 
 ```bash
