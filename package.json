@@ -25,7 +25,8 @@
     "figlet": "^1.6.0",
     "gradient-string": "^2.0.2",
     "inquirer": "^8.2.6",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.22.10",
