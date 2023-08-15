@@ -19,23 +19,25 @@ import { exit, stdin as input, stdout as output } from 'node:process';
 // const gradient = require('gradient-string');
 import gradient from 'gradient-string'
 import getRandomName from './modules/RandomNames'
-import { getCliData, makeDir, copyDir } from './modules/CommanderUtils'
+import { getCliData, getHasCli, makeDir, copyDir } from './modules/CommanderUtils'
+import { CompanyInquirer } from './modules/CompanyInquirer'
 
 const yellowCli = new Command()
 yellowCli
   .version("1.0.0")
   .description("Une CLI pour générer un template Astro inédit (https://github.com/bioboosterbob/matrix-land-astro-template)")
-  .option("--dir", "config the directory for template")
+  .option("--dir, -d", "config the directory for template")
+  .option("--company, -c", "le nom de l'entreprise ou de l'association pour laquelle vous développez le site web.")
+  .option("--help, -h, help, h", "Affiche l'aide pour matrix-land-astro-template")
   .parse(process.argv)
   
 const yellowOpts = yellowCli.opts()
 
-function isDirOptionUsed() {
-    if (yellowOpts.dir) return true
-    else return false
-}
+const wasDirOptionUsed = getHasCli("--dir")
+const wasCompanyOtpionUsed = getHasCli("--company")
+const wasHelpOptionUsed = getHasCli("help","h")
 
-const wasDirOptionUsed = isDirOptionUsed()
+if (wasHelpOptionUsed) yellowCli.help()
 
 if (wasDirOptionUsed) {
     let dirPath = getCliData("--dir")
@@ -60,3 +62,7 @@ if (wasDirOptionUsed) {
     }
 }
 
+if (wasCompanyOtpionUsed) {
+  console.log("company option handle")
+  CompanyInquirer()
+}

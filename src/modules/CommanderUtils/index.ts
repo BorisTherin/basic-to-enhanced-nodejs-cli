@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-export const getHasCli = (prefix: string, alias = undefined) => {
+export const getHasCli = (prefix: string, alias: any = undefined) => {
     const prefixIndex = process.argv.findIndex(
       (arg) => arg === prefix || (alias && arg === alias)
     );
