@@ -19,10 +19,6 @@ module.exports = {
         default: "var(--color-background)",
         offset: "var(--color-background-offset)",
       },
-      backgroundOpacity: {
-        default: "var(--tw-bg-opacity)",
-        offset: "var(--tw-bg-opacity)",
-      },
       borderColor: {
         default: "var(--color-border)",
       },

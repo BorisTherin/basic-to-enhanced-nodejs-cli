@@ -9,5 +9,12 @@
     "esModuleInterop": true,
     "moduleResolution": "node"
   },
+  "files": [
+    "src/index.ts",
+    "src/modules/CommanderUtils/index.ts",
+    "src/modules/CompanyInquirer/index.ts",
+    "src/modules/Mustache/index.ts",
+    "src/modules/RandomNames/index.ts"
+  ],
   "exclude": ["node_modules", "template"] 
 }

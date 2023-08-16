@@ -1,0 +1,4 @@
+<card>
+    nom: {{_NOM_}}
+    prenom: {{_PRENOM_}}
+</card>

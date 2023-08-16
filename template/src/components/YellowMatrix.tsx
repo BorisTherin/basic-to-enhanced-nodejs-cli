@@ -8,30 +8,19 @@ interface size {
 /**
  * MATRIX EFFECT CONSTANTS
  */
-const MINIMAL_SPEED: number = 0.8                     // initial speed 
-const MAX_ADD_SPEED: number = 0.4                    // add variant speed
-const REDROP_AFTER_INVISIBLE_RATIO: number = 0.975  // make it hardly random to repop top
+const MINIMAL_SPEED: number = 0.8   // original 1
+const MAX_ADD_SPEED: number = 0.4   // original 0
+const REDROP_AFTER_INVISIBLE_RATIO: number = 0.975
 const FONT_COLOR: string = "#ff0"
 const FONT_SIZE: number = 10
-const MATRIX_CANVAS_TRAIL_INDICE: number = 0.04  // opacity for black over drawed symbols, the higher give the shorter trail
+const MATRIX_CANVAS_TRAIL_INDICE: number = 0.04
 const FONT: string = "arial"
-const MATRIX_BASE: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~"    // beware every ambigous symbols  like '"\
+const MATRIX_BASE: string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~"
 /**
  * DEV
- * 
- * show hydration & event handling in the console (require some scrolling)
- * add some content down the landing page
- * scroll out so u dont see the canvas anymore, 
- * reload the page & scroll top with opened console
- * shall requiere <YellowMatrix client:visible /> in splash.astro
- * 
- *  caution: calculs suppose splash screen with header bar (L.93)
- *    shall matter if u want to throw out the header bar for Events handling
- * 
- * 0 = prod |  100+ = show hydration inb the console
- * 
+ * 0 = prod |  300 = show hydration dev mode
  */
-const DEV_SHOW_HYDRATION = 0
+const DEV_SHOW_HYDRATION = 50
 
 export function YellowMatrix() {
     const MatrixCanvasRef: any = useRef()
@@ -115,7 +104,7 @@ export function YellowMatrix() {
         MatrixCanvas_rqAF = requestAnimationFrame(draw)        
         window.addEventListener('resize', handleMatrixCanvasResize)
         document.addEventListener('scroll', handleMatrixCanvasEvents)
-        // COMPOSANTS REGULAR EVENT REMOVE @DISMOUNT (do not proc atm)
+        // COMPOSANTS REGULAR EVENT REMOVE @DISMOUNT (dont proc atm)
         return(removeEventListener('scroll', handleMatrixCanvasEvents))
     }, [])
 

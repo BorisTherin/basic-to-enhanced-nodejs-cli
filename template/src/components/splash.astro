@@ -1,23 +1,61 @@
 ---
-import { YellowMatrix } from "./YellowMatrix"
-import YellowMatrixDetails from "./yellow-matrix-details.astro"
-import GitHubCorner from "./github-corner.astro"
+import { Picture } from "@astrojs/image/components";
+import { Icon } from "astro-icon";
+//import astronautImage from "~/assets/astronaut.png";
+//import HeroImage from "~/components/hero-image.astro";
+//import Starfield from "~/components/starfield.astro";
+import GitHubCorner from "./github-corner.astro";
+
+import { YellowMatrix } from "./YellowMatrix";
+import { TwitchPlayer } from "./TwitchPlayer";
+
+const widths = [450, 800];
+const sizes = "(min-width: 640px) 42vw, 67vw";
 ---
 
-<section class="relative h-full w-full bg-black">
-  <YellowMatrix client:idle />
+<section class="relative h-full bg-black">
+  <YellowMatrix client:idle/>
   <GitHubCorner />
-  <div class="h-full w-full "> 
-    {<!-- REMOVE THIS ONE & THERE U READY FOR UR OWN VERSION -->}   
-    <YellowMatrixDetails />
+
+  <div class="relative grid h-full place-items-center sm:grid-cols-2">
+    <TwitchPlayer client:only="preact" />
   </div>
 </section>
 
+<noscript>
+  <style>
+    #splash-bg-fallback {
+      display: block;
+    }
+  </style>
+</noscript>
+
 <style>
+  @keyframes float {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(0, 30px, 0);
+    }
+  }
+
+  #astronaut {
+    animation: float linear 2.5s infinite alternate;
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    #astronaut {
+      @apply animate-none;
+    }
 
     :global(#starfield) {
       @apply hidden;
+    }
+
+    #splash-bg-fallback {
+      @apply block;
     }
   }
 </style>

@@ -1,24 +1,13 @@
 import Mustache from 'mustache'
 import fs from 'fs'
 
-var path = process.cwd()
-var buffer = fs.readFileSync(path + '/testbed/interpolemoi.tsx.bidon')
-console.log('buffer : ', buffer.toString())
-
-const yellowMatrixView = {
-  title: 'Biobob',
-  width: () => 2400 + 45,
-  height: () => 34 + 45,
+export function interpolateOnTheFly(content: string, view: object) { 
+  return(Mustache.render(content, view)) 
 }
 
-const output2 = Mustache.render(
-  '<YellowMatrix title={{title}} width={{width}} height={{height}} />',
-  yellowMatrixView
-)
-
-
-const view = {
-  martin: 'Henri',
-  bernard: 'Raoul',
+export function interpoleTemplateFile(file: string, view: object) {
+  //const path = './templates/'+file
+  console.log('interpolation of ', file)
+  const buffer = fs.readFileSync(file)
+  return(Mustache.render(buffer.toString(), view)) 
 }
-console.log(Mustache.render(buffer.toString(), view))
